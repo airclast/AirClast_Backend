@@ -1,39 +1,60 @@
-# ⚡ Peaceful_Brighten_Backend
+# ⚡ AirClast Backend
 
 <div align="center">
 
-[![npm version](https://img.shields.io/npm/v/peaceful-brighten-backend?style=for-the-badge&label=npm)](https://www.npmjs.com/package/peaceful-brighten-backend) <!-- TODO:  Replace with actual package name if published -->
-[![GitHub license](https://img.shields.io/github/license/Jaber-riyan/Peaceful_Brighten_Backend?style=for-the-badge)](LICENSE)
+[![GitHub stars](https://img.shields.io/github/stars/airclast/AirClast_Backend?style=for-the-badge)](https://github.com/airclast/AirClast_Backend/stargazers)
+[![GitHub forks](https://img.shields.io/github/forks/airclast/AirClast_Backend?style=for-the-badge)](https://github.com/airclast/AirClast_Backend/network)
+[![GitHub issues](https://img.shields.io/github/issues/airclast/AirClast_Backend?style=for-the-badge)](https://github.com/airclast/AirClast_Backend/issues)
+[![GitHub license](https://img.shields.io/github/license/airclast/AirClast_Backend?style=for-the-badge)](LICENSE)
+[![Next.js](https://img.shields.io/badge/Next.js-000000?style=for-the-badge&logo=nextdotjs&logoColor=white)](https://nextjs.org/)
+[![TypeScript](https://img.shields.io/badge/typescript-%23007ACC.svg?style=for-the-badge&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
 
-**A backend service built with TypeScript.**
+
+**The backend API for AirClast application.**
+
+[Live Demo](https://air-clast.vercel.app) 
 
 </div>
 
 ## 📖 Overview
 
-This repository contains the source code for Peaceful_Brighten_Backend, a backend service written in TypeScript.  The purpose of this service is currently unclear due to the limited codebase; further details will be added once the functionality is more defined.  The target audience is developers who might integrate this backend into their applications.  This project aims to provide [TODO: Add core function or problem this backend solves].
+This repository contains the backend API for the AirClast application.  It is built using TypeScript and Node.js, and deployed on Vercel.  The API handles user authentication, data management, and other crucial backend functionalities for the AirClast frontend.
+
+## ✨ Features
+
+- **User Authentication:** Secure user registration and login using [TODO: Specify Authentication method, if found in code].
+- **Data Management:**  Handles the creation, retrieval, updating, and deletion of [TODO: Specify data models, if found in code].
+- **API Endpoints:** Provides a RESTful API for various functionalities, detailed below.
+- **Vercel Deployment:**  Seamlessly deployed and managed using Vercel.
 
 
 ## 🛠️ Tech Stack
 
 **Backend:**
 
-* [![TypeScript](https://img.shields.io/badge/typescript-%23007ACC.svg?style=for-the-badge&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
+- [![Node.js](https://img.shields.io/badge/node.js-6DA55F?style=for-the-badge&logo=node.js&logoColor=white)](https://nodejs.org/)
+- [![TypeScript](https://img.shields.io/badge/typescript-%23007ACC.svg?style=for-the-badge&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
+- [TODO: Add any other backend frameworks/libraries]
+
+**DevOps:**
+
+- [![Vercel](https://img.shields.io/badge/vercel-%23000000.svg?style=for-the-badge&logo=vercel&logoColor=white)](https://vercel.com/)
 
 
 ## 🚀 Quick Start
 
 ### Prerequisites
 
-* Node.js (version >=16.0.0 recommended)
-* npm (or yarn/pnpm)
+- Node.js (version >=16.0.0)
+- npm (or yarn)
+
 
 ### Installation
 
 1. **Clone the repository:**
    ```bash
-   git clone https://github.com/Jaber-riyan/Peaceful_Brighten_Backend.git
-   cd Peaceful_Brighten_Backend
+   git clone https://github.com/airclast/AirClast_Backend.git
+   cd AirClast_Backend
    ```
 
 2. **Install dependencies:**
@@ -41,43 +62,93 @@ This repository contains the source code for Peaceful_Brighten_Backend, a backen
    npm install
    ```
 
-3. **Start the development server:**  (Further instructions pending identification of a start script within `package.json`)
+3. **Start development server:**
    ```bash
-   # TODO: Add the correct command to start the server once identified in package.json.  Example: npm run dev
+   npm run dev
    ```
 
 ## 📁 Project Structure
 
 ```
-Peaceful_Brighten_Backend/
-├── src/             # Source code
-│   └── [TODO: Add subdirectories once identified]
-├── package.json      # Project metadata and dependencies
-├── package-lock.json # Dependency tree
-├── tsconfig.json     # TypeScript configuration
-├── eslint.config.mjs # ESLint configuration
-└── LICENSE           # License file
+├── 📁 .git/ 🚫 (auto-hidden)
+├── 📁 node_modules/ 🚫 (auto-hidden)
+├── 📁 src/
+│   ├── 📁 app/
+│   │   ├── 📁 config/
+│   │   │   ├── 📄 env.ts
+│   │   │   └── 📄 passport.ts
+│   │   ├── 📁 errorHelpers/
+│   │   │   └── 📄 AppError.ts
+│   │   ├── 📁 helpers/
+│   │   │   ├── 📄 handleCastError.ts
+│   │   │   ├── 📄 handleDuplicateError.ts
+│   │   │   ├── 📄 handleValidationError.ts
+│   │   │   └── 📄 handleZodError.ts
+│   │   ├── 📁 interfaces/
+│   │   │   ├── 📄 error.type.ts
+│   │   │   └── 📄 index.d.ts
+│   │   ├── 📁 middlewares/
+│   │   │   ├── 📄 checkAuth.ts
+│   │   │   ├── 📄 globalErrorHandler.ts
+│   │   │   ├── 📄 notFound.ts
+│   │   │   └── 📄 validateRequest.ts
+│   │   ├── 📁 modules/
+│   │   │   ├── 📁 auth/
+│   │   │   │   ├── 📄 auth.controller.ts
+│   │   │   │   ├── 📄 auth.route.ts
+│   │   │   │   └── 📄 auth.service.ts
+│   │   │   └── 📁 user/
+│   │   │       ├── 📄 user.controller.ts
+│   │   │       ├── 📄 user.interface.ts
+│   │   │       ├── 📄 user.model.ts
+│   │   │       ├── 📄 user.route.ts
+│   │   │       ├── 📄 user.service.ts
+│   │   │       └── 📄 user.validate.ts
+│   │   ├── 📁 routes/
+│   │   │   └── 📄 index.ts
+│   │   └── 📁 utils/
+│   │       ├── 📄 catchAsync.ts
+│   │       ├── 📄 clearCookie.ts
+│   │       ├── 📄 jwt.ts
+│   │       ├── 📄 seedSuperAdmin.ts
+│   │       ├── 📄 sendResponse.ts
+│   │       ├── 📄 setCookie.ts
+│   │       └── 📄 userTokes.ts
+│   ├── 📄 app.ts
+│   └── 📄 server.ts
+├── 🔒 .env 🚫 (auto-hidden)
+├── 🚫 .gitignore
+├── 📄 LICENSE
+├── 📖 README.md
+├── 📄 eslint.config.mjs
+├── 📄 package-lock.json
+├── 📄 package.json
+├── 📄 tsconfig.json
+└── 📄 vercel.json
 ```
 
 ## ⚙️ Configuration
 
-Currently, no explicit configuration files or environment variables are detected.  Further details will be added as they become available in the codebase.
+### Environment Variables
+[TODO: List environment variables based on .env.example or code analysis.  Include variable name, description, default value (if any), and whether it's required.]
 
+## 📚 API Reference (if applicable)
+
+[TODO: Generate API reference based on route analysis. Include endpoint, method, request parameters, response codes and body structure. Use a table format for clear presentation.]
 
 ## 🤝 Contributing
 
-Contributions are welcome! Please open an issue or submit a pull request.
+We welcome contributions! Please see our [CONTRIBUTING.md](CONTRIBUTING.md) for details.  (TODO: Create CONTRIBUTING.md if it doesn't exist)
 
 
 ## 📄 License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-
 ---
 
 <div align="center">
 
-**Made with ❤️ by Jaber-riyan**
+**⭐ Star this repo if you find it helpful!**
 
 </div>
