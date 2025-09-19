@@ -1,6 +1,6 @@
 import jwt, { JwtPayload, SignOptions } from "jsonwebtoken"
-import AppError from "../app/errorHelpers/AppError";
-import { envVars } from "../app/config/env";
+import { envVars } from "../app/config/env.js";
+import AppError from "../app/errorHelpers/AppError.js";
 
 export const generateJwtToken = (payload: JwtPayload, secret: jwt.Secret | jwt.PrivateKey, expiresIn: string = envVars.JWT_ACCESS_EXPIRES) => {
     const accessToken = jwt.sign(payload, secret, {

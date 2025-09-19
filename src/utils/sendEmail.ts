@@ -3,10 +3,6 @@ import nodemailer from "nodemailer";
 import path from "path";
 import { envVars } from "../app/config/env";
 import AppError from "../app/errorHelpers/AppError";
-import { fileURLToPath } from "url";
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
 
 const transporter = nodemailer.createTransport({
     // port: envVars.EMAIL_SENDER.SMTP_PORT,
