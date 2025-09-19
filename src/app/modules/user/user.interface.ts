@@ -3,8 +3,8 @@ import { Types } from "mongoose"
 export enum Role {
     SUPER_ADMIN = "SUPER_ADMIN",
     ADMIN = "ADMIN",
-    MODERATOR = "MODERATOR",
-    USER = "USER"
+    USER = "USER",
+    GUIDE = "GUIDE"
 }
 
 export enum IsActive {
@@ -34,4 +34,6 @@ export interface IUser {
     auths: IAuthProvider[],
     bookings?: Types.ObjectId[],
     guides?: Types.ObjectId[],
+    createdAt?: Date
+    updatedAt?: Date
 }

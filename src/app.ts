@@ -1,4 +1,4 @@
-import express, { Application, NextFunction, Request, Response } from 'express'
+import express, { Application, Request, Response } from 'express'
 import morgan from 'morgan'
 import cors from "cors"
 import { router } from './app/routes'
@@ -37,7 +37,7 @@ app.use("/api/v1", router)
 app.get("/", async (req: Request, res: Response) => {
     res.status(200).json({
         success: true,
-        message: "Welcome to Peaceful Brighten System Backend"
+        message: "Welcome to Air Guard System Backend"
     })
 })
 

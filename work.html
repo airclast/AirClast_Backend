@@ -1,0 +1,769 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Air Quality Forecasting System Design</title>
+    <style>
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        line-height: 1.6;
+        margin: 0;
+        padding: 20px;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        min-height: 100vh;
+      }
+
+      .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        background: rgba(255, 255, 255, 0.95);
+        border-radius: 20px;
+        padding: 30px;
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+      }
+
+      h1 {
+        color: #2c3e50;
+        text-align: center;
+        margin-bottom: 10px;
+        font-size: 2.5em;
+      }
+
+      .subtitle {
+        text-align: center;
+        color: #7f8c8d;
+        margin-bottom: 40px;
+        font-size: 1.2em;
+      }
+
+      .tab-container {
+        margin-bottom: 30px;
+      }
+
+      .tabs {
+        display: flex;
+        background: #ecf0f1;
+        border-radius: 10px;
+        overflow: hidden;
+        margin-bottom: 30px;
+      }
+
+      .tab {
+        flex: 1;
+        padding: 15px 20px;
+        background: #ecf0f1;
+        border: none;
+        cursor: pointer;
+        font-size: 16px;
+        font-weight: 600;
+        transition: all 0.3s ease;
+      }
+
+      .tab.active {
+        background: #3498db;
+        color: white;
+      }
+
+      .tab:hover {
+        background: #3498db;
+        color: white;
+      }
+
+      .tab-content {
+        display: none;
+        animation: fadeIn 0.5s ease-in;
+      }
+
+      .tab-content.active {
+        display: block;
+      }
+
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(20px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .schema-table {
+        background: white;
+        border-radius: 10px;
+        padding: 20px;
+        margin: 20px 0;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        border-left: 5px solid #3498db;
+      }
+
+      .table-name {
+        font-size: 1.3em;
+        font-weight: bold;
+        color: #2c3e50;
+        margin-bottom: 15px;
+        display: flex;
+        align-items: center;
+      }
+
+      .table-icon {
+        margin-right: 10px;
+        font-size: 1.5em;
+      }
+
+      .fields {
+        display: grid;
+        gap: 10px;
+      }
+
+      .field {
+        padding: 8px 12px;
+        background: #f8f9fa;
+        border-radius: 5px;
+        border-left: 3px solid #27ae60;
+        font-family: "Courier New", monospace;
+      }
+
+      .field-name {
+        font-weight: bold;
+        color: #2c3e50;
+      }
+
+      .field-type {
+        color: #8e44ad;
+        margin-left: 10px;
+      }
+
+      .field-constraint {
+        color: #e74c3c;
+        font-size: 0.9em;
+        margin-left: 10px;
+      }
+
+      .architecture-diagram {
+        background: white;
+        border-radius: 15px;
+        padding: 30px;
+        text-align: center;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+      }
+
+      .layer {
+        margin: 20px 0;
+        padding: 20px;
+        border-radius: 10px;
+        position: relative;
+      }
+
+      .frontend-layer {
+        background: linear-gradient(45deg, #ff6b6b, #ee5a52);
+        color: white;
+      }
+
+      .api-layer {
+        background: linear-gradient(45deg, #4ecdc4, #44a08d);
+        color: white;
+      }
+
+      .processing-layer {
+        background: linear-gradient(45deg, #45b7d1, #3498db);
+        color: white;
+      }
+
+      .data-layer {
+        background: linear-gradient(45deg, #96ceb4, #27ae60);
+        color: white;
+      }
+
+      .external-layer {
+        background: linear-gradient(45deg, #feca57, #ff9ff3);
+        color: white;
+      }
+
+      .layer h3 {
+        margin: 0 0 15px 0;
+        font-size: 1.4em;
+      }
+
+      .layer-items {
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 15px;
+      }
+
+      .layer-item {
+        background: rgba(255, 255, 255, 0.2);
+        padding: 10px 15px;
+        border-radius: 20px;
+        font-size: 0.9em;
+        backdrop-filter: blur(10px);
+      }
+
+      .arrow {
+        text-align: center;
+        font-size: 2em;
+        color: #7f8c8d;
+        margin: 10px 0;
+      }
+
+      .features-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 20px;
+        margin: 30px 0;
+      }
+
+      .feature-card {
+        background: white;
+        padding: 25px;
+        border-radius: 15px;
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        border-top: 5px solid #3498db;
+        transition: transform 0.3s ease;
+      }
+
+      .feature-card:hover {
+        transform: translateY(-5px);
+      }
+
+      .feature-title {
+        font-size: 1.2em;
+        font-weight: bold;
+        color: #2c3e50;
+        margin-bottom: 10px;
+      }
+
+      .feature-description {
+        color: #7f8c8d;
+        line-height: 1.6;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>🌤️Air Quality Forecasting System</h1>
+      <p class="subtitle">
+        Database Schema & System Architecture for NASA TEMPO Integration
+      </p>
+
+      <div class="tab-container">
+        <div class="tabs">
+          <button class="tab active" onclick="showTab('schema')">
+            Database Schema
+          </button>
+          <button class="tab" onclick="showTab('architecture')">
+            System Architecture
+          </button>
+          <button class="tab" onclick="showTab('features')">
+            Key Features
+          </button>
+        </div>
+
+        <div id="schema" class="tab-content active">
+          <div class="schema-table">
+            <div class="table-name">
+              <span class="table-icon">👥</span>Users
+            </div>
+            <div class="fields">
+              <div class="field">
+                <span class="field-name">user_id</span
+                ><span class="fieldtype">UUID PRIMARY KEY</span>
+              </div>
+              <div class="field">
+                <span class="field-name">email</span
+                ><span class="fieldtype">VARCHAR(255)</span
+                ><span class="field-constraint">UNIQUE, NOT NULL</span>
+              </div>
+              <div class="field">
+                <span class="field-name">password_hash</span
+                ><span class="field-type">VARCHAR(255)</span>
+              </div>
+              <div class="field">
+                <span class="field-name">first_name</span
+                ><span class="field-type">VARCHAR(100)</span>
+              </div>
+              <div class="field">
+                <span class="field-name">last_name</span
+                ><span class="field-type">VARCHAR(100)</span>
+              </div>
+              <div class="field">
+                <span class="field-name">health_conditions</span
+                ><span class="field-type">JSON</span>
+              </div>
+              <div class="field">
+                <span class="fieldname">notification_preferences</span
+                ><span class="field-type">JSON</span>
+              </div>
+              <div class="field">
+                <span class="field-name">created_at</span
+                ><span class="field-type">TIMESTAMP</span>
+              </div>
+              <div class="field">
+                <span class="field-name">updated_at</span
+                ><span class="field-type">TIMESTAMP</span>
+              </div>
+            </div>
+          </div>
+          <div class="schema-table">
+            <div class="table-name">
+              <span class="tableicon">📍</span>User_Locations
+            </div>
+            <div class="fields">
+              <div class="field">
+                <span class="field-name">location_id</span
+                ><span class="field-type">UUID PRIMARY KEY</span>
+              </div>
+              <div class="field">
+                <span class="field-name">user_id</span
+                ><span class="fieldtype">UUID FOREIGN KEY</span>
+              </div>
+              <div class="field">
+                <span class="field-name">name</span
+                ><span class="fieldtype">VARCHAR(100)</span>
+              </div>
+              <div class="field">
+                <span class="field-name">latitude</span
+                ><span class="fieldtype">DECIMAL(10,8)</span>
+              </div>
+              <div class="field">
+                <span class="field-name">longitude</span
+                ><span class="field-type">DECIMAL(11,8)</span>
+              </div>
+              <div class="field">
+                <span class="field-name">is_primary</span
+                ><span class="field-type">BOOLEAN</span>
+              </div>
+              <div class="field">
+                <span class="field-name">created_at</span
+                ><span class="field-type">TIMESTAMP</span>
+              </div>
+            </div>
+          </div>
+          <div class="schema-table">
+            <div class="table-name">
+              <span class="table-icon">🛰️</span>TEMPO_Data
+            </div>
+            <div class="fields">
+              <div class="field">
+                <span class="field-name">record_id</span
+                ><span class="field-type">UUID PRIMARY KEY</span>
+              </div>
+              <div class="field">
+                <span class="field-name">latitude</span
+                ><span class="fieldtype">DECIMAL(10,8)</span>
+              </div>
+              <div class="field">
+                <span class="field-name">longitude</span
+                ><span class="field-type">DECIMAL(11,8)</span>
+              </div>
+              <div class="field">
+                <span class="field-name">timestamp</span
+                ><span class="field-type">TIMESTAMP</span>
+              </div>
+              <div class="field">
+                <span class="field-name">no2_column_density</span
+                ><span class="field-type">FLOAT</span>
+              </div>
+              <div class="field">
+                <span class="field-name">o3_column_density</span
+                ><span class="field-type">FLOAT</span>
+              </div>
+              <div class="field">
+                <span class="fieldname">formaldehyde_density</span
+                ><span class="field-type">FLOAT</span>
+              </div>
+              <div class="field">
+                <span class="field-name">cloud_fraction</span
+                ><span class="field-type">FLOAT</span>
+              </div>
+              <div class="field">
+                <span class="field-name">quality_flag</span
+                ><span class="field-type">INTEGER</span>
+              </div>
+              <div class="field">
+                <span class="field-name">ingested_at</span
+                ><span class="field-type">TIMESTAMP</span>
+              </div>
+            </div>
+          </div>
+          <div class="schema-table">
+            <div class="table-name">
+              <span class="tableicon">🏭</span>Ground_Stations
+            </div>
+            <div class="fields">
+              <div class="field">
+                <span class="field-name">station_id</span
+                ><span class="field-type">VARCHAR(50) PRIMARY KEY</span>
+              </div>
+              <div class="field">
+                <span class="field-name">station_name</span
+                ><span class="field-type">VARCHAR(200)</span>
+              </div>
+              <div class="field">
+                <span class="field-name">latitude</span
+                ><span class="fieldtype">DECIMAL(10,8)</span>
+              </div>
+              <div class="field">
+                <span class="field-name">longitude</span
+                ><span class="field-type">DECIMAL(11,8)</span>
+              </div>
+              <div class="field">
+                <span class="field-name">elevation</span
+                ><span class="field-type">FLOAT</span>
+              </div>
+              <div class="field">
+                <span class="field-name">agency</span
+                ><span class="fieldtype">VARCHAR(100)</span>
+              </div>
+              <div class="field">
+                <span class="field-name">station_type</span
+                ><span class="field-type">VARCHAR(50)</span>
+              </div>
+              <div class="field">
+                <span class="field-name">is_active</span
+                ><span class="field-type">BOOLEAN</span>
+              </div>
+            </div>
+          </div>
+          <div class="schema-table">
+            <div class="table-name">
+              <span class="tableicon">🌪️</span>Air_Quality_Measurements
+            </div>
+            <div class="fields">
+              <div class="field">
+                <span class="field-name">measurement_id</span
+                ><span class="field-type">UUID PRIMARY KEY</span>
+              </div>
+              <div class="field">
+                <span class="field-name">station_id</span
+                ><span class="field-type">VARCHAR(50) FOREIGN KEY</span>
+              </div>
+              <div class="field">
+                <span class="field-name">timestamp</span
+                ><span class="field-type">TIMESTAMP</span>
+              </div>
+              <div class="field">
+                <span class="field-name">pm25</span
+                ><span class="fieldtype">FLOAT</span>
+              </div>
+              <div class="field">
+                <span class="field-name">pm10</span
+                ><span class="fieldtype">FLOAT</span>
+              </div>
+              <div class="field">
+                <span class="field-name">o3</span
+                ><span class="fieldtype">FLOAT</span>
+              </div>
+              <div class="field">
+                <span class="field-name">no2</span
+                ><span class="fieldtype">FLOAT</span>
+              </div>
+              <div class="field">
+                <span class="field-name">co</span
+                ><span class="fieldtype">FLOAT</span>
+              </div>
+              <div class="field">
+                <span class="field-name">so2</span
+                ><span class="fieldtype">FLOAT</span>
+              </div>
+              <div class="field">
+                <span class="field-name">aqi_value</span
+                ><span class="field-type">INTEGER</span>
+              </div>
+              <div class="field">
+                <span class="field-name">aqi_category</span
+                ><span class="field-type">VARCHAR(50)</span>
+              </div>
+            </div>
+          </div>
+          <div class="schema-table">
+            <div class="table-name">
+              <span class="table-icon">☀️</span>Weather_Data
+            </div>
+            <div class="fields">
+              <div class="field">
+                <span class="field-name">weather_id</span
+                ><span class="field-type">UUID PRIMARY KEY</span>
+              </div>
+              <div class="field">
+                <span class="field-name">latitude</span
+                ><span class="fieldtype">DECIMAL(10,8)</span>
+              </div>
+              <div class="field">
+                <span class="field-name">longitude</span
+                ><span class="field-type">DECIMAL(11,8)</span>
+              </div>
+              <div class="field">
+                <span class="field-name">timestamp</span
+                ><span class="field-type">TIMESTAMP</span>
+              </div>
+              <div class="field">
+                <span class="field-name">temperature</span
+                ><span class="field-type">FLOAT</span>
+              </div>
+              <div class="field">
+                <span class="field-name">humidity</span
+                ><span class="field-type">FLOAT</span>
+              </div>
+              <div class="field">
+                <span class="field-name">wind_speed</span
+                ><span class="field-type">FLOAT</span>
+              </div>
+              <div class="field">
+                <span class="field-name">wind_direction</span
+                ><span class="field-type">FLOAT</span>
+              </div>
+              <div class="field">
+                <span class="field-name">pressure</span
+                ><span class="fieldtype">FLOAT</span>
+              </div>
+              <div class="field">
+                <span class="field-name">precipitation</span
+                ><span class="field-type">FLOAT</span>
+              </div>
+              <div class="field">
+                <span class="field-name">uv_index</span
+                ><span class="field-type">FLOAT</span>
+              </div>
+            </div>
+          </div>
+          <div class="schema-table">
+            <div class="table-name">
+              <span class="tableicon">🔮</span>Air_Quality_Forecasts
+            </div>
+            <div class="fields">
+              <div class="field">
+                <span class="field-name">forecast_id</span
+                ><span class="field-type">UUID PRIMARY KEY</span>
+              </div>
+              <div class="field">
+                <span class="field-name">latitude</span
+                ><span class="fieldtype">DECIMAL(10,8)</span>
+              </div>
+              <div class="field">
+                <span class="field-name">longitude</span
+                ><span class="field-type">DECIMAL(11,8)</span>
+              </div>
+              <div class="field">
+                <span class="field-name">forecast_timestamp</span
+                ><span class="field-type">TIMESTAMP</span>
+              </div>
+              <div class="field">
+                <span class="field-name">valid_timestamp</span
+                ><span class="field-type">TIMESTAMP</span>
+              </div>
+              <div class="field">
+                <span class="field-name">predicted_aqi</span
+                ><span class="field-type">INTEGER</span>
+              </div>
+              <div class="field">
+                <span class="field-name">predicted_category</span
+                ><span class="field-type">VARCHAR(50)</span>
+              </div>
+              <div class="field">
+                <span class="field-name">confidence_score</span
+                ><span class="field-type">FLOAT</span>
+              </div>
+              <div class="field">
+                <span class="field-name">model_version</span
+                ><span class="field-type">VARCHAR(50)</span>
+              </div>
+              <div class="field">
+                <span class="field-name">created_at</span
+                ><span class="field-type">TIMESTAMP</span>
+              </div>
+            </div>
+          </div>
+          <div class="schema-table">
+            <div class="table-name">
+              <span class="table-icon">🔔</span>Notifications
+            </div>
+            <div class="fields">
+              <div class="field">
+                <span class="field-name">notification_id</span
+                ><span class="field-type">UUID PRIMARY KEY</span>
+              </div>
+              <div class="field">
+                <span class="field-name">user_id</span
+                ><span class="fieldtype">UUID FOREIGN KEY</span>
+              </div>
+              <div class="field">
+                <span class="field-name">location_id</span
+                ><span class="field-type">UUID FOREIGN KEY</span>
+              </div>
+              <div class="field">
+                <span class="field-name">alert_type</span
+                ><span class="field-type">VARCHAR(50)</span>
+              </div>
+              <div class="field">
+                <span class="field-name">severity_level</span
+                ><span class="field-type">VARCHAR(20)</span>
+              </div>
+              <div class="field">
+                <span class="field-name">message</span
+                ><span class="field-type">TEXT</span>
+              </div>
+              <div class="field">
+                <span class="field-name">sent_at</span
+                ><span class="fieldtype">TIMESTAMP</span>
+              </div>
+              <div class="field">
+                <span class="field-name">read_at</span
+                ><span class="fieldtype">TIMESTAMP</span>
+              </div>
+              <div class="field">
+                <span class="field-name">delivery_method</span
+                ><span class="field-type">VARCHAR(20)</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div id="architecture" class="tab-content">
+          <div class="architecture-diagram">
+            <div class="layer frontend-layer">
+              <h3>🖥️ Frontend Layer</h3>
+              <div class="layer-items">
+                <div class="layer-item">React Web App</div>
+                <div class="layer-item">React Native Mobile</div>
+                <div class="layer-item">Interactive Maps</div>
+                <div class="layer-item">Push Notifications</div>
+                <div class="layer-item">PWA Support</div>
+              </div>
+            </div>
+
+            <div class="arrow">⬇️</div>
+
+            <div class="layer api-layer">
+              <h3>🔗API Gateway Layer</h3>
+              <div class="layer-items">
+                <div class="layer-item">REST API</div>
+                <div class="layer-item">GraphQL</div>
+                <div class="layer-item">WebSocket (Real-time)</div>
+                <div class="layer-item">Authentication</div>
+                <div class="layer-item">Rate Limiting</div>
+              </div>
+            </div>
+
+            <div class="arrow">⬇️</div>
+
+            <div class="layer processing-layer">
+              <h3>⚙️ Processing Layer</h3>
+              <div class="layer-items">
+                <div class="layer-item">Node.js/Python Services</div>
+                <div class="layer-item">ML Forecasting Models</div>
+                <div class="layer-item">Data Aggregation</div>
+                <div class="layer-item">Alert Engine</div>
+                <div class="layer-item">Background Jobs</div>
+              </div>
+            </div>
+
+            <div class="arrow">⬇️</div>
+
+            <div class="layer data-layer">
+              <h3>💾 Data Layer</h3>
+              <div class="layer-items">
+                <div class="layer-item">PostgreSQL (Primary)</div>
+                <div class="layer-item">InfluxDB (Time Series)</div>
+                <div class="layer-item">Redis (Cache)</div>
+                <div class="layer-item">S3 (File Storage)</div>
+                <div class="layer-item">ElasticSearch (Search)</div>
+              </div>
+            </div>
+
+            <div class="arrow">⬇️</div>
+
+            <div class="layer external-layer">
+              <h3>🌐 External Data Sources</h3>
+              <div class="layer-items">
+                <div class="layer-item">NASA TEMPO API</div>
+                <div class="layer-item">EPA AirNow API</div>
+                <div class="layer-item">OpenWeather API</div>
+                <div class="layer-item">NOAA Weather</div>
+                <div class="layer-item">Local Sensor Networks</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div id="features" class="tab-content">
+          <div class="features-grid">
+            <div class="feature-card">
+              <div class="feature-title">🗺️ Interactive Air Quality Maps</div>
+              <div class="feature-description">
+                Real-time visualization of air quality data with heat maps,
+                overlays for different pollutants, and integration of TEMPO
+                satellite data with ground measurements.
+              </div>
+            </div>
+
+            <div class="feature-card">
+              <div class="feature-title">🔮 AI-Powered Forecasting</div>
+              <div class="feature-description">
+                Machine learning models that combine satellite, weather, and
+                historical data to predict air quality up to 48 hours in advance
+                with confidence scores.
+              </div>
+            </div>
+
+            <div class="feature-card">
+              <div class="feature-title">🚨 Smart Health Alerts</div>
+              <div class="feature-description">
+                Personalized notifications based on user location, health
+                conditions (asthma, COPD), and activity plans with actionable
+                recommendations.
+              </div>
+            </div>
+
+            <div class="feature-card">
+              <div class="feature-title">📊 Historical Trends</div>
+              <div class="feature-description">
+                Long-term air quality analysis, seasonal patterns, pollution
+                source identification, and progress tracking for environmental
+                initiatives.
+              </div>
+            </div>
+
+            <div class="feature-card">
+              <div class="feature-title">🏃 Activity Planning</div>
+              <div class="feature-description">
+                Recommendations for outdoor activities, optimal exercise times,
+                route planning for joggers/cyclists based on real-time and
+                forecasted conditions.
+              </div>
+            </div>
+
+            <div class="feature-card">
+              <div class="feature-title">🔗 Multi-Source Integration</div>
+              <div class="feature-description">
+                Seamless combination of NASA TEMPO satellite data, EPA ground
+                stations, weather APIs, and local sensor networks for
+                comprehensive coverage.
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script>
+      function showTab(tabName) {
+        // Hide all tab contents
+        const contents = document.querySelectorAll(".tab-content");
+        contents.forEach((content) => content.classList.remove("active"));
+
+        // Remove active class from all tabs
+        const tabs = document.querySelectorAll(".tab");
+        tabs.forEach((tab) => tab.classList.remove("active"));
+
+        // Show selected tab content
+        document.getElementById(tabName).classList.add("active");
+
+        // Add active class to clicked tab
+        event.target.classList.add("active");
+      }
+    </script>
+  </body>
+</html>
