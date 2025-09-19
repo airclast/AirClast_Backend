@@ -1,9 +1,9 @@
 import { NextFunction, Request, Response, Router } from "express";
-import { AuthControllers } from "./auth.controller";
-import { checkAuth } from "../../middlewares/checkAuth";
-import { Role } from "../user/user.interface";
 import passport from "passport";
-import { envVars } from "../../config/env";
+import { AuthControllers } from "./auth.controller.js";
+import { Role } from "../user/user.interface.js";
+import { envVars } from "../../config/env.js";
+import { checkAuth } from "../../middlewares/checkAuth.js";
 
 const router = Router()
 

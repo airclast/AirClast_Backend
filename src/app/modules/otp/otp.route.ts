@@ -1,6 +1,6 @@
 // src/modules/otp/otp.routes.ts
 import express from "express";
-import { OTPController } from "./otp.controller";
+import { OTPController } from "./otp.controller.js";
 
 const router = express.Router();
 

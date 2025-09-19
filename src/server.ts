@@ -1,9 +1,9 @@
 import { Server } from 'http'
 import mongoose from 'mongoose'
-import { app } from './app'
-import { envVars } from './app/config/env'
-import { seedSuperAdmin } from './utils/seedSuperAdmin'
-import { connectRedis } from './app/config/redis.config'
+import { envVars } from './app/config/env.js'
+import { app } from './app.js'
+import { connectRedis } from './app/config/redis.config.js'
+import { seedSuperAdmin } from './utils/seedSuperAdmin.js'
 
 
 let server: Server

@@ -2,8 +2,8 @@ import ejs from "ejs";
 import nodemailer from "nodemailer";
 import path from "path";
 import { fileURLToPath } from "url";
-import { envVars } from "../app/config/env";
-import AppError from "../app/errorHelpers/AppError";
+import { envVars } from "../app/config/env.js";
+import AppError from "../app/errorHelpers/AppError.js";
 
 // Recreate __dirname in ESM
 const __filename = fileURLToPath(import.meta.url);

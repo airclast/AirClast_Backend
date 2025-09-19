@@ -1,7 +1,7 @@
 import { Router } from "express";
-import { AuthRoutes } from "../modules/auth/auth.route";
-import { UserRoutes } from "../modules/user/user.route";
-import { OtpRoutes } from "../modules/otp/otp.route";
+import { UserRoutes } from "../modules/user/user.route.js";
+import { AuthRoutes } from "../modules/auth/auth.route.js";
+import { OtpRoutes } from "../modules/otp/otp.route.js";
 
 export const router = Router()
 

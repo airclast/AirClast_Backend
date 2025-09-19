@@ -1,13 +1,13 @@
 import express, { Application, Request, Response } from 'express'
 import morgan from 'morgan'
 import cors from "cors"
-import { router } from './app/routes'
-import { notFound } from './app/middlewares/notFound'
-import { globalErrorHandler } from './app/middlewares/globalErrorHandler'
 import cookieParser from 'cookie-parser'
 import passport from 'passport'
 import expressSession from "express-session"
 import "./app/config/passport"
+import { router } from './app/routes/index.js'
+import { globalErrorHandler } from './app/middlewares/globalErrorHandler.js'
+import { notFound } from './app/middlewares/notFound.js'
 
 export const app: Application = express()
 

@@ -1,10 +1,10 @@
 import passport from "passport";
 import { Strategy as GoogleStrategy, Profile as GoogleStrategyProfile, VerifyCallback as GoogleStrategyVerifyCallback } from "passport-google-oauth20";
-import { User } from "../modules/user/user.model";
-import { Role } from "../modules/user/user.interface";
-import { envVars } from "./env";
-import { IVerifyOptions, Strategy as LocalStrategy, VerifyFunction, VerifyFunctionWithRequest } from "passport-local";
+import { IVerifyOptions, Strategy as LocalStrategy } from "passport-local";
 import bcryptjs from "bcryptjs"
+import { IAuthProvider, Role } from "../modules/user/user.interface.js";
+import { envVars } from "./env.js";
+import { User } from "../modules/user/user.model.js";
 
 
 passport.use(
@@ -25,7 +25,7 @@ passport.use(
                 //     return done("User does not Exist")
                 // }
 
-                const isGoogleAuthenticated = isUserExist.auths.some(providerObjects => providerObjects.provider == "google")
+                const isGoogleAuthenticated = isUserExist.auths.some((providerObjects:IAuthProvider) => providerObjects.provider == "google")
 
                 // if(isGoogleAuthenticated){
                 //     return done(null, false, {message:"You have authenticated through google. If you want to login with credentials, then first you login with google and set a password for your gmail, then you can login with email and password"})
