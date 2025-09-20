@@ -1,6 +1,6 @@
 import httpStatus from "http-status-codes"
 import mongoose from "mongoose"
-import { TErrorSources, TGenericErrorResponse } from "../interfaces/error.type.js"
+import { TErrorSources, TGenericErrorResponse } from "../interfaces/error.type"
 
 export const handleValidationError = (err: mongoose.Error.ValidationError): TGenericErrorResponse => {
 

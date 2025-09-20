@@ -1,6 +1,6 @@
 import mongoose from "mongoose"
+import { TGenericErrorResponse } from "../interfaces/error.type"
 import httpStatus from "http-status-codes"
-import { TGenericErrorResponse } from "../interfaces/error.type.js"
 
 export const handleCastError = (err: mongoose.Error.CastError): TGenericErrorResponse => {
     return {

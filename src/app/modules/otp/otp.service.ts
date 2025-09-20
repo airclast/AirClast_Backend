@@ -1,10 +1,9 @@
 import crypto from "crypto"
+import { User } from "../user/user.model"
+import AppError from "../../errorHelpers/AppError"
 import { StatusCodes } from "http-status-codes"
-import { User } from "../user/user.model.js"
-import AppError from "../../errorHelpers/AppError.js"
-import { redisClient } from "../../config/redis.config.js"
-import { sendEmail } from "../../../utils/sendEmail.js"
-
+import { redisClient } from "../../config/redis.config"
+import { sendEmail } from "../../../utils/sendEmail"
 
 const OTP_EXPIRATION = 2 * 60
 

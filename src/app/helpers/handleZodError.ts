@@ -1,6 +1,6 @@
 import { ZodError } from "zod";
+import { TErrorSources, TGenericErrorResponse } from "../interfaces/error.type";
 import httpStatus from "http-status-codes"
-import { TErrorSources, TGenericErrorResponse } from "../interfaces/error.type.js";
 
 export const handleZodError = (err: ZodError): TGenericErrorResponse => {
     const errorsSources: TErrorSources[] = []

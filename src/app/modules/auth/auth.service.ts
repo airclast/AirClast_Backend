@@ -1,13 +1,13 @@
 import { JwtPayload } from "jsonwebtoken"
+import { envVars } from "../../config/env"
+import AppError from "../../errorHelpers/AppError"
+import { User } from "../user/user.model"
 import bcryptjs from "bcryptjs"
 import httpStatus from "http-status-codes"
+import { IAuthProvider, IsActive } from "../user/user.interface"
 import jwt from "jsonwebtoken"
-import { createNewAccessTokenWithRefreshToken } from "../../../utils/userTokes.js"
-import { User } from "../user/user.model.js"
-import AppError from "../../errorHelpers/AppError.js"
-import { envVars } from "../../config/env.js"
-import { IAuthProvider, IsActive } from "../user/user.interface.js"
-import { sendEmail } from "../../../utils/sendEmail.js"
+import { createNewAccessTokenWithRefreshToken } from "../../../utils/userTokes"
+import { sendEmail } from "../../../utils/sendEmail"
 
 // const credentialsLogin = async (payload: Partial<IUser>) => {
 //     const { email, password: payloadPassword } = payload
@@ -88,7 +88,7 @@ const setPassword = async (decodedToken: JwtPayload, plainPassword: string) => {
         throw new AppError(httpStatus.NOT_FOUND, "User Not Found")
     }
 
-    if (user.password && user.auths.some((providerObj:IAuthProvider) => providerObj.provider === "google")) {
+    if (user.password && user.auths.some(providerObj => providerObj.provider === "google")) {
         throw new AppError(httpStatus.BAD_REQUEST, "You have already set your password. Now you can change the password from your profile password update")
     }
 

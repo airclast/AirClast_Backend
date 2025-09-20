@@ -1,6 +1,5 @@
-
+import { TGenericErrorResponse } from "../interfaces/error.type"
 import httpStatus from "http-status-codes"
-import { TGenericErrorResponse } from "../interfaces/error.type.js"
 
 export const handleDuplicateError = (err: any): TGenericErrorResponse => {
         const matchedArray = err.message.match(/"([^"]*)"/)

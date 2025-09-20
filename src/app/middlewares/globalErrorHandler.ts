@@ -1,12 +1,12 @@
 import { NextFunction, Request, Response } from "express"
-import { TErrorSources } from "../interfaces/error.type.js"
+import { envVars } from "../config/env"
 import httpStatus from "http-status-codes"
-import { handleDuplicateError } from "../helpers/handleDuplicateError.js"
-import { handleCastError } from "../helpers/handleCastError.js"
-import { handleZodError } from "../helpers/handleZodError.js"
-import { handleValidationError } from "../helpers/handleValidationError.js"
-import AppError from "../errorHelpers/AppError.js"
-import { envVars } from "../config/env.js"
+import AppError from "../errorHelpers/AppError"
+import { TErrorSources } from "../interfaces/error.type"
+import { handleCastError } from "../helpers/handleCastError"
+import { handleDuplicateError } from "../helpers/handleDuplicateError"
+import { handleValidationError } from "../helpers/handleValidationError"
+import { handleZodError } from "../helpers/handleZodError"
 
 export const globalErrorHandler = (err: any, req: Request, res: Response, next: NextFunction) => {
 

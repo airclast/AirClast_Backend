@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
-import { catchAsync } from "../../../utils/catchAsync.js";
-import { OTPService } from "./otp.service.js";
-import { sendResponse } from "../../../utils/sendResponse.js";
+import { OTPService } from "./otp.service";
+import { catchAsync } from "../../../utils/catchAsync";
+import { sendResponse } from "../../../utils/sendResponse";
 
 
 const sendOTP = catchAsync(async (req: Request, res: Response) => {

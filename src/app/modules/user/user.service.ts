@@ -1,12 +1,12 @@
+import AppError from "../../errorHelpers/AppError";
+import { IAuthProvider, IUser, Role } from "./user.interface";
+import { User } from "./user.model";
 import httpStatus from "http-status-codes"
 import bcryptjs from "bcryptjs"
+import { envVars } from "../../config/env";
 import { JwtPayload } from "jsonwebtoken";
-import { IAuthProvider, IUser, Role } from "./user.interface.js";
-import { User } from "./user.model.js";
-import AppError from "../../errorHelpers/AppError.js";
-import { envVars } from "../../config/env.js";
-import { QueryBuilder } from "../../../utils/QueryBuilder.js";
-import { userSearchableFields } from "./user.constant.js";
+import { userSearchableFields } from "./user.constant";
+import { QueryBuilder } from "../../../utils/QueryBuilder";
 
 
 const createUser = async (payload: Partial<IUser>) => {
