@@ -19,6 +19,7 @@ interface EnvConfig {
     GOOGLE_CALLBACK_URL: string
     EXPRESS_SESSION_SECRET: string
     FRONTEND_URL: string
+    FRONTEND_LIVE_URL: string
 
     
 
@@ -64,6 +65,7 @@ const loadEnvVariables = (): EnvConfig => {
 
 
         "FRONTEND_URL",
+        "FRONTEND_LIVE_URL",
 
 
         "CLOUDINARY_CLOUD_NAME",
@@ -107,6 +109,7 @@ const loadEnvVariables = (): EnvConfig => {
         GOOGLE_CALLBACK_URL: process.env.GOOGLE_CALLBACK_URL!,
         EXPRESS_SESSION_SECRET: process.env.EXPRESS_SESSION_SECRET!,
         FRONTEND_URL: process.env.FRONTEND_URL!,
+        FRONTEND_LIVE_URL: process.env.FRONTEND_URL!,
 
         // CLOUDINARY
         CLOUDINARY: {
