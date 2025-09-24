@@ -8,12 +8,13 @@ import "./app/config/passport"
 import { router } from './app/routes/index.js'
 import { globalErrorHandler } from './app/middlewares/globalErrorHandler.js'
 import { notFound } from './app/middlewares/notFound.js'
+import { envVars } from './app/config/env'
 
 export const app: Application = express()
 
 // Passport JS Initialization Middlewares
 app.use(expressSession({
-    secret: "Your Secret",
+    secret: envVars.EXPRESS_SESSION_SECRET,
     resave: false,
     saveUninitialized: false
 }))
