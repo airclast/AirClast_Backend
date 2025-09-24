@@ -1,9 +1,9 @@
 import passport from "passport";
-import { Strategy as GoogleStrategy, Profile as GoogleStrategyProfile, VerifyCallback as GoogleStrategyVerifyCallback, VerifyCallback } from "passport-google-oauth20";
+import { Strategy as GoogleStrategy, Profile as GoogleStrategyProfile, VerifyCallback as VerifyCallback } from "passport-google-oauth20";
 import { User } from "../modules/user/user.model";
 import { IsActive, Role } from "../modules/user/user.interface";
 import { envVars } from "./env";
-import { IVerifyOptions, Strategy as LocalStrategy, VerifyFunction, VerifyFunctionWithRequest } from "passport-local";
+import {  Strategy as LocalStrategy } from "passport-local";
 import bcryptjs from "bcryptjs"
 
 

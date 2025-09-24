@@ -1,4 +1,4 @@
-import express, { Application, Request, Response } from 'express'
+import express, { Application, NextFunction, Request, Response } from 'express'
 import morgan from 'morgan'
 import cors from "cors"
 import cookieParser from 'cookie-parser'
@@ -30,9 +30,20 @@ app.use(cors({
         "http://localhost:3000",
         "https://air-clast-next-js.vercel.app"
     ],
-    methods:["POST","GET","PATCH","DELETE","PUT"],
+    methods: ["POST", "GET", "PATCH", "DELETE", "PUT", "OPTIONS"],
     credentials: true
 }))
+app.options("*", cors())
+app.use((req:Request, res:Response, next:NextFunction) => {
+    res.header("Access-Control-Allow-Origin", req.headers.origin);
+    res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
+    res.header("Access-Control-Allow-Headers", "Content-Type, Authorization");
+    if (req.method === "OPTIONS") {
+        return res.sendStatus(200);
+    }
+    next();
+});
+
 
 app.use("/api/v1", router)
 
